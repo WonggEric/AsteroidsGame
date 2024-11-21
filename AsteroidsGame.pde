@@ -8,7 +8,7 @@ private boolean hKey = false;
 
 public void setup()
 {
-  size(1000, 1000);
+  size(750, 750);
 }
 
 public void draw()
