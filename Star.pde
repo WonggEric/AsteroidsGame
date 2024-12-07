@@ -1,14 +1,38 @@
 class Star {
-  private int myX, myY, myC;
+  private int myX, myY, myC1, myC2;
   public Star() {
     myX = (int)(Math.random()*751);
     myY = (int)(Math.random()*751);
-    myC = color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+    myC1 = color(255, 255, 255);
+    myC2 = color(255, 255, 180);
   }
 
   public void show() {
-    fill(myC);
+    fill(myC1);
     noStroke();
-    ellipse(myX, myY, 5, 5);
+    ellipse(myX, myY, 2, 2);
+    fill(myC2);
+    noStroke();
+    ellipse(myX, myY, 2.1, 2.1);
+  }
+  public void bigDipper() {
+    stroke(255);
+    strokeWeight(0.75);
+    fill(myC1);
+    ellipse(328, 305, 2, 2);
+    ellipse(409, 323, 2, 2);
+    ellipse(439, 347, 2, 2);
+    ellipse(473, 359, 2, 2);
+    ellipse(575, 375, 2, 2);
+    ellipse(556, 414, 2, 2);
+    ellipse(478, 400, 2, 2);
+
+    line(328, 305, 409, 323);
+    line(409, 323, 439, 347);
+    line(439, 347, 473, 359);
+    line(473, 359, 575, 375);
+    line(575, 375, 556, 414);
+    line(556, 414, 478, 400);
+    line(478, 400, 473, 359);
   }
 }
