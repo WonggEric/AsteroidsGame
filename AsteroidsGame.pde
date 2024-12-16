@@ -2,7 +2,8 @@ private Spaceship spaceship= new Spaceship();
 private Star[] star = new Star[350];
 private Star constellation = new Star();
 private ArrayList <Asteroid> asteroid = new ArrayList <Asteroid>();
-
+private ArrayList <Bullet> bullets = new ArrayList <Bullet>();
+private int asteroidSize = 20;
 
 private boolean wKey = false;
 private boolean sKey = false;
@@ -18,7 +19,7 @@ public void setup()
     star[0].bigDipper();
   }
 
-  for (int i = 0; i<15; i++) {
+  for (int i = 0; i<asteroidSize; i++) {
     asteroid.add(new Asteroid());
   }
 }
@@ -29,21 +30,46 @@ public void draw()
   constellation.bigDipper();
   spaceship.show();
   spaceship.move();
+
   for (int i = 0; i<star.length; i++) {
     star[i].show();
   }
+
   for (int i = 0; i<asteroid.size(); i++) {
     asteroid.get(i).show();
     asteroid.get(i).move();
     float d = dist(spaceship.getX(), spaceship.getY(), asteroid.get(i).getX(), asteroid.get(i).getY());
-    if (d<25) {
+    if (d<20) {
       asteroid.remove(i);
       i--;
     }
   }
-  while (asteroid.size() < 15) {
-    asteroid.add(new Asteroid());
+
+  for (int i = 0; i < bullets.size(); i++) {
+    bullets.get(i).move();
+    bullets.get(i).show();
+    if (bullets.get(i).getX() < 1 || bullets.get(i).getX() > 749) {
+      bullets.remove(i);
+      i--;
+      break;
+    }
+    if (bullets.get(i).getY() < 1 || bullets.get(i).getY() > 749) {
+      bullets.remove(i);
+      i--;
+      break;
+    }
+    for (int l = 0; l < asteroid.size(); l++) {
+      float q = dist(asteroid.get(l).getX(), asteroid.get(l).getY(), bullets.get(i).getX(), bullets.get(i).getY());
+      if (q < 20) {
+        bullets.remove(i);
+        asteroid.remove(l);
+        i--;
+        l--;
+        break;
+      }
+    }
   }
+
 
   if (wKey) {
     spaceship.accelerate(0.1);
@@ -58,6 +84,8 @@ public void draw()
   }
 }
 
+
+
 public void keyPressed() {
   if (key == 'w') {
     wKey = true;
@@ -69,6 +97,8 @@ public void keyPressed() {
     dKey = true;
   } else if (key == 'h') {
     hKey = true;
+  } else if (key == ' ') {
+    bullets.add(new Bullet(spaceship));
   }
 }
 
